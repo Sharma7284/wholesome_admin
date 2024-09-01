@@ -65,7 +65,7 @@ const Main = () => {
     <div className="flex flex-col h-full">
       {pathName !== `dashboard` && (
         <div className="sticky flex gap-4 p-4 py-4 justify-end">
-          <Link to={"/dashboard/article/add"}>
+          <Link to={`/dashboard/${pathName}/add`}>
             <button className="btn btn-outline btn-success">
               Add {getCurrentUrlText(pathName)}
             </button>
@@ -91,7 +91,7 @@ const Main = () => {
             element={<User onDataClick={handleDataFrom}></User>}
           ></Route>
           <Route
-            path="posts"
+            path="posts/*"
             element={<Posts onDataClick={handleDataFrom}></Posts>}
           ></Route>
           <Route
@@ -100,7 +100,9 @@ const Main = () => {
           ></Route>
           <Route
             path="article/*"
-            element={<Article isEdit={isEdit} onDataClick={handleDataFrom}></Article>}
+            element={
+              <Article isEdit={isEdit} onDataClick={handleDataFrom}></Article>
+            }
           ></Route>
         </Routes>
       </div>

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import SidebarData from "../../data/SidebarData";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import AdminLogo from "../../assets/logo/admin_logo.png";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const [navbar, setNavbar] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const location = useLocation();
@@ -19,6 +20,11 @@ const Sidebar = () => {
     setActiveIndex(currentIndex);
     setNavbar(SidebarData);
   }, [location]);
+
+  const onLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <div className="w-[100%] min-h-screen flex flex-col gap-2 rounded-lg">
@@ -43,11 +49,12 @@ const Sidebar = () => {
         ))}
       </nav>
       <div className="flex bg-[#085946] rounded-lg items-center justify-center p-2">
-        <Link className="w-[100%]" to={"/login"}>
-          <button className="bg-white w-[100%] p-2 rounded-lg font-bold">
-            Logout
-          </button>
-        </Link>
+        <button
+          onClick={onLogout}
+          className="bg-white w-[100%] p-2 rounded-lg font-bold"
+        >
+          Logout
+        </button>
       </div>
     </div>
   );
