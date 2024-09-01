@@ -15,8 +15,8 @@ const User = () => {
       if (res) {
         console.log(res.data);
         setCount(res?.data?.length);
-        setTotalData(res.data.count);
-        setTotalPage(res.data.totalPage);
+        setTotalData(res?.data?.count);
+        setTotalPage(res?.data?.totalPage);
         setUsers(
           res.data.data.map((m) => ({ ...m, isSelect: false })).slice(0, 10)
         );
