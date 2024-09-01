@@ -73,8 +73,8 @@ const Community = ({ isEdit, onDataClick }) => {
                             onChange={handleCheckAll}
                           />
                         </th>
-                        <th>Image</th>
-                        <th>Category</th>
+                        {/* <th>Image</th> */}
+                        {/* <th>Category</th> */}
                         <th>Name</th>
                         <th>Status</th>
                         <th>Source Link</th>
@@ -95,7 +95,7 @@ const Community = ({ isEdit, onDataClick }) => {
                                 className="checkbox"
                               />
                             </td>
-                            <td>
+                            {/* <td>
                               <img
                                 width={40}
                                 height={40}
@@ -103,24 +103,24 @@ const Community = ({ isEdit, onDataClick }) => {
                                 src={item?.articleImage}
                                 alt=""
                               />
-                            </td>
-                            <td>
+                            </td> */}
+                            {/* <td>
                               <p className="badge badge-outline badge-info line-clamp-1">
                                 {item?.articleCategoryId?.name}
                               </p>
-                            </td>
+                            </td> */}
                             <td>
                               <p className="line-clamp-1">{item?.title}</p>
                             </td>
                             <td>
                               <p
                                 className={`badge badge-outline ${
-                                  item?.isApproved
+                                  item?.isActive
                                     ? "badge-success"
                                     : "badge-error"
                                 }`}
                               >
-                                {item?.isApproved ? "Active" : "Inactive"}
+                                {item?.isActive ? "Active" : "Inactive"}
                               </p>
                             </td>
                             <td>
