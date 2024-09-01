@@ -18,7 +18,7 @@ const User = () => {
         setTotalData(res?.data?.count);
         setTotalPage(res?.data?.totalPage);
         setUsers(
-          res.data.data.map((m) => ({ ...m, isSelect: false })).slice(0, 10)
+          res?.data?.data?.map((m) => ({ ...m, isSelect: false }))
         );
       }
     });
