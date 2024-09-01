@@ -3,7 +3,7 @@ import apiService from "../../../utils/axiosInstance";
 
 const AddArticle = () => {
   const [title, setTitle] = useState("");
-  const [articleImage, setArticleImage] = useState("");
+  const [articleImage, setArticleImage] = useState(undefined);
   const [description, setDescription] = useState("");
   const [sourceLink, setSourceLink] = useState("");
   const [articleCategoryId, setArticleCategoryId] = useState("");
@@ -23,15 +23,6 @@ const AddArticle = () => {
 
   const onPostSubmit = (e) => {
     e.preventDefault();
-
-    let payload = {
-      title,
-      articleImage,
-      description,
-      sourceLink,
-      articleCategoryId,
-      isApproved,
-    };
 
     setIsLoading(true);
     apiService
@@ -77,6 +68,7 @@ const AddArticle = () => {
               <input
                 type="file"
                 id="file"
+                onChange={(e) => setArticleImage(e.target.files[0])}
                 className="input w-full h-auto border-2 pl-0"
                 placeholder="Enter title"
               />

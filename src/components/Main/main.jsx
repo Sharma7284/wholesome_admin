@@ -87,7 +87,7 @@ const Main = () => {
         <Routes>
           <Route path="" element={<Dashboard></Dashboard>}></Route>
           <Route
-            path="users"
+            path="users/*"
             element={<User onDataClick={handleDataFrom}></User>}
           ></Route>
           <Route

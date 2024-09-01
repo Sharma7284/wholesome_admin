@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import apiService from "../../utils/axiosInstance";
-import { Link, Route, Routes, useParams } from "react-router-dom";
+import { Link, Route, Routes, useLocation, useParams } from "react-router-dom";
 import AddArticle from "./addArticle/addArticle";
 
 const Article = ({ onDataClick, isEdit }) => {
   const params = useParams();
+  const location = useLocation()
 
   useEffect(() => {
     if (params["*"]) {
@@ -30,7 +31,7 @@ const Article = ({ onDataClick, isEdit }) => {
         setArticle(res.data.data.map((m) => ({ ...m, isSelect: false })));
       }
     });
-  }, [pageNumber]);
+  }, [pageNumber, location]);
 
   const sendFormData = () => {
     const data = article.filter((f) => f.isSelect);

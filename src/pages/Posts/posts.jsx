@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import apiService from "../../utils/axiosInstance";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import AddPost from "./addPost/addPost";
 
 const Posts = ({ onDataClick }) => {
+  const location = useLocation();
   const [post, setPost] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
@@ -23,7 +24,7 @@ const Posts = ({ onDataClick }) => {
           setPost(res.data.data.map((m) => ({ ...m, isSelect: false })));
         }
       });
-  }, [pageNumber]);
+  }, [pageNumber, location]);
 
   const handleCurrentBox = (id) => {
     const updatedData = post.map((item) => {
