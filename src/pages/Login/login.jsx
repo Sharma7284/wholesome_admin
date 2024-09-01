@@ -4,8 +4,8 @@ import apiService from "../../utils/axiosInstance";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -29,11 +29,10 @@ const Login = () => {
           <input
             className="w-[100%] outline-none border-2 p-2 rounded-md"
             type="email"
-            name=""
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            id=""
-            placeholder=""
+            id="email"
+            placeholder="Enter email"
           />
         </div>
         <div className="flex flex-col items-start">
@@ -41,10 +40,9 @@ const Login = () => {
           <input
             className="w-[100%] outline-none border-2 p-2 rounded-md"
             type="password"
-            name=""
             onChange={(e) => setPassword(e.target.value)}
-            id=""
-            placeholder=""
+            id="password"
+            placeholder="Enter password"
           />
         </div>
         <div className="">
