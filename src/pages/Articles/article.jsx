@@ -15,7 +15,6 @@ const Article = ({ onDataClick, isEdit }) => {
     }
   }, [params]);
 
-  const [isApproved, setIsApproved] = useState(false);
 
   const [article, setArticle] = useState([]);
   const [selectAll, setSelectAll] = useState(false);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import apiService from "../../utils/axiosInstance";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import AddPost from "./addPost/addPost";
+import { toast, ToastContainer } from "react-toastify";
 
 const Posts = ({ onDataClick }) => {
   const location = useLocation();
@@ -46,6 +47,43 @@ const Posts = ({ onDataClick }) => {
 
   const sendFormData = (dataFrom) => {
     onDataClick(dataFrom);
+  };
+
+  const changeStatus = (item) => {
+    const loading = toast.loading(`Processing...`, { isLoading: true });
+
+    apiService
+      .post("/posts/postUpdateStatus", {
+        id: item.postId,
+        isApproved: !item.isApproved,
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data && res.data.success) {
+          toast.update(loading, {
+            render: res.data.message,
+            type: `success`,
+            isLoading: false,
+            autoClose: 3000,
+          });
+          setPost(
+            post.map((m) => {
+              if (m.postId === item.postId) {
+                m.isApproved = !m.isApproved;
+              }
+              return m;
+            })
+          );
+        }
+      })
+      .catch((error) => {
+        // toast.update(loading, {
+        //   render: error.error.message,
+        //   type: `success`,
+        //   isLoading: false,
+        //   autoClose: 3000,
+        // });
+      });
   };
 
   return (
@@ -101,7 +139,13 @@ const Posts = ({ onDataClick }) => {
                       <td>
                         <p className="line-clamp-1">{item?.title}</p>
                       </td>
-                      <td>
+                      <td className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          className="toggle"
+                          checked={item?.isApproved}
+                          onChange={(e) => changeStatus(item)}
+                        />
                         <p
                           className={`badge badge-outline ${
                             item?.isApproved ? "badge-success" : "badge-error"
@@ -151,6 +195,7 @@ const Posts = ({ onDataClick }) => {
                 </button>
               </div>
             </div>
+            <ToastContainer />
           </div>
         }
       ></Route>
