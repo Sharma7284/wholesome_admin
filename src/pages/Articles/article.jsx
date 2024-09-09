@@ -2,16 +2,20 @@ import React, { useEffect, useState } from "react";
 import apiService from "../../utils/axiosInstance";
 import { Link, Route, Routes, useLocation, useParams } from "react-router-dom";
 import AddArticle from "./addArticle/addArticle";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Article = ({ onDataClick, isEdit }) => {
   const params = useParams();
-  const location = useLocation()
+  const location = useLocation();
 
   useEffect(() => {
     if (params["*"]) {
       console.log(params["*"]);
     }
   }, [params]);
+
+  const [isApproved, setIsApproved] = useState(false);
 
   const [article, setArticle] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
@@ -57,6 +61,43 @@ const Article = ({ onDataClick, isEdit }) => {
   const handleCheckAll = () => {
     setSelectAll(!selectAll);
     setArticle(article.map((item) => ({ ...item, isSelect: !selectAll })));
+  };
+
+  const changeStatus = (item) => {
+    const loading = toast.loading(`Processing...`, { isLoading: true });
+
+    apiService
+      .post("/articles/postUpdateStatus", {
+        id: item.articleId,
+        isApproved: !item.isApproved,
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data && res.data.success) {
+          toast.update(loading, {
+            render: res.data.message,
+            type: `success`,
+            isLoading: false,
+            autoClose: 3000,
+          });
+          setArticle(
+            article.map((m) => {
+              if (m.articleId === item.articleId) {
+                m.isApproved = !m.isApproved;
+              }
+              return m;
+            })
+          );
+        }
+      })
+      .catch((error) => {
+        // toast.update(loading, {
+        //   render: error.error.message,
+        //   type: `success`,
+        //   isLoading: false,
+        //   autoClose: 3000,
+        // });
+      });
   };
 
   return (
@@ -120,7 +161,13 @@ const Article = ({ onDataClick, isEdit }) => {
                             <td>
                               <p className="line-clamp-1">{item?.title}</p>
                             </td>
-                            <td>
+                            <td className="flex items-center gap-2">
+                              <input
+                                type="checkbox"
+                                className="toggle"
+                                checked={item?.isApproved}
+                                onChange={(e) => changeStatus(item)}
+                              />
                               <p
                                 className={`badge badge-outline ${
                                   item?.isApproved

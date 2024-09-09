@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SidebarData from "../../data/SidebarData";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AdminLogo from "../../assets/logo/admin_logo.png";
+import { toast, ToastContainer } from "react-toastify";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -22,8 +23,14 @@ const Sidebar = () => {
   }, [location]);
 
   const onLogout = () => {
+    const loading = toast.loading(`Processing`, { isLoading: true });
     localStorage.removeItem("token");
-    navigate("/login");
+    setTimeout(() => {
+      navigate("/login");
+      toast.update(loading, {
+        isLoading: false,
+      });
+    }, 300);
   };
 
   return (
@@ -56,6 +63,7 @@ const Sidebar = () => {
           Logout
         </button>
       </div>
+      <ToastContainer />
     </div>
   );
 };

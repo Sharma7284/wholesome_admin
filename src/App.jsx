@@ -1,8 +1,6 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { Navigate, Route, Router, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login/login";
-import Dashboard from "./pages/Dashboard/dashboard";
 import Layout from "./components/Layout/layout";
 import NotFound from "./pages/NotFound/404";
 

@@ -1,20 +1,48 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiService from "../../utils/axiosInstance";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./login.css";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isBtnLoading, setIsBtnLoading] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    apiService.post("/auth/login", { email, password }).then((res) => {
-      if (res) {
-        localStorage.setItem(`token`, res.data?.data?.accessToken);
-        navigate("/dashboard");
-      }
-    });
+    const loading = toast.loading(`Processing...`, { isLoading: true });
+    apiService
+      .post("/auth/login", { email, password })
+      .then((res) => {
+        if (res.data && res.data.success) {
+          setIsBtnLoading(false);
+          localStorage.setItem(`token`, res.data?.data?.accessToken);
+          toast.update(loading, {
+            render: res.data.data.message,
+            type: `success`,
+            isLoading: false,
+            autoClose: 3000,
+          });
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 300);
+        } else {
+          setIsBtnLoading(false);
+          toast.update(loading, {
+            render: res.response.data.message,
+            type: `error`,
+            isLoading: false,
+            autoClose: 3000,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toast(error.message);
+      });
   };
 
   return (
@@ -52,10 +80,11 @@ const Login = () => {
             type="submit"
             className="bg-[#085946] text-white w-[100%] rounded-lg p-2"
           >
-            Login
+            {isBtnLoading ? <spin className="spinner"></spin> : `Login`}
           </button>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 };
