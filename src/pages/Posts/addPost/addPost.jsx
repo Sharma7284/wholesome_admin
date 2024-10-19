@@ -3,7 +3,7 @@ import apiService from "../../../utils/axiosInstance";
 
 const AddPost = () => {
   const [title, setTitle] = useState("");
-  const [postImage, setPostImage] = useState("");
+  const [postImage, setPostImage] = useState(null);
   const [description, setDescription] = useState("");
   const [postUrl, setPostUrl] = useState("");
   const [postCategoryId, setPostCategoryId] = useState("");
@@ -25,19 +25,25 @@ const AddPost = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    let payload = {
-      title,
-      postImage,
-      description,
-      postUrl,
-      postCategoryId,
-      isApproved,
-    };
+    const formData = new FormData();
 
-    apiService.post("/posts/postPosts", { formData: payload }).then((res) => {
-      console.log(res);
-      setIsLoading(false);
-    });
+    formData.append("file", postImage, postImage?.name);
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("postUrl", postUrl);
+    formData.append("postCategoryId", postCategoryId);
+    formData.append("isApproved", isApproved);
+
+    apiService
+      .post("/posts/postPosts", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -70,6 +76,7 @@ const AddPost = () => {
                 id="file"
                 className="input w-full h-auto border-2 pl-0"
                 placeholder="Enter title"
+                onChange={(e) => setPostImage(e?.target?.files[0])}
               />
             </div>
           </div>
