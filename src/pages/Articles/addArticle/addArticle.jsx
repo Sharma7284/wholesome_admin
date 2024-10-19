@@ -115,6 +115,21 @@ const AddArticle = () => {
           </div>
           <div className="flex flex-col">
             <label htmlFor="sourceLink" className="label">
+              Author Name
+            </label>
+            <div className="border-2 rounded-lg">
+              <input
+                type="text"
+                id="authorName"
+                required
+                onChange={(e) => setAuthorName(e.target.value)}
+                className="input w-full border"
+                placeholder="Enter Author Name"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="sourceLink" className="label">
               Article Category
             </label>
             <div className="border-2 py-2 rounded-lg">
