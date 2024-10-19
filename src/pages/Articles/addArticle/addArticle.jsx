@@ -7,6 +7,7 @@ const AddArticle = () => {
   const [description, setDescription] = useState("");
   const [sourceLink, setSourceLink] = useState("");
   const [articleCategoryId, setArticleCategoryId] = useState("");
+  const [authorName, setAuthorName] = useState("");
   const [isApproved, setIsApproved] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,14 +26,22 @@ const AddArticle = () => {
     e.preventDefault();
 
     setIsLoading(true);
+
+    const formData = new FormData();
+
+    formData.append("file", articleImage, articleImage?.name);
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("sourceLink", sourceLink);
+    formData.append("articleCategoryId", articleCategoryId);
+    formData.append("isApproved", isApproved);
+    formData.append("authorName", authorName);
+
     apiService
-      .post("/articles/postArticles", {
-        title: title.trim(),
-        articleImage: articleImage,
-        description: description.trim(),
-        sourceLink: sourceLink,
-        articleCategoryId: articleCategoryId,
-        isApproved: isApproved,
+      .post("/articles/postArticles", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then((res) => {
         console.log(res);
