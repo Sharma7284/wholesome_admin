@@ -122,7 +122,7 @@ const Dashboard = () => {
                     <p className="line-clamp-1">{m.title}</p>
                   </td>
                   <td>
-                    <p className="line-clamp-1">{m.description}</p>
+                    <p className="line-clamp-1" innerHTML={m?.description}></p>
                   </td>
                   <td>
                     <button className="link">

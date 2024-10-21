@@ -3,6 +3,7 @@ import apiService from "../../utils/axiosInstance";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import AddPost from "./addPost/addPost";
 import { toast, ToastContainer } from "react-toastify";
+import EditPost from "./EditPost/editPost";
 
 const Posts = ({ onDataClick }) => {
   const location = useLocation();
@@ -200,6 +201,9 @@ const Posts = ({ onDataClick }) => {
         }
       ></Route>
       <Route path="/add" element={<AddPost></AddPost>}>
+        {" "}
+      </Route>
+      <Route path="/edit" element={<EditPost></EditPost>}>
         {" "}
       </Route>
     </Routes>
