@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+/* .custom-editor-container {
+  min-height: 200px;
+}
+.custom-editor-container .ck.ck-editor__mainitor {
+  height: 100%;
+} */
+.custom-editor-container .ck-content {
+  padding: 0 25px !important;
+  min-height: 200px;
+}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import apiService from "../../../utils/axiosInstance";
+import RichTextEditor from "../../../components/CKEditor/ckEditor";
 
 const AddArticle = () => {
   const [title, setTitle] = useState("");
@@ -8,6 +9,7 @@ const AddArticle = () => {
   const [sourceLink, setSourceLink] = useState("");
   const [articleCategoryId, setArticleCategoryId] = useState("");
   const [authorName, setAuthorName] = useState("");
+  const [summary, setSummary] = useState("");
   const [isApproved, setIsApproved] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,6 +38,7 @@ const AddArticle = () => {
     formData.append("articleCategoryId", articleCategoryId);
     formData.append("isApproved", isApproved);
     formData.append("authorName", authorName);
+    formData.append("summary", summary);
 
     apiService
       .post("/articles/postArticles", formData, {
@@ -47,6 +50,10 @@ const AddArticle = () => {
         console.log(res);
         setIsLoading(false);
       });
+  };
+
+  const handleDescription = (data) => {
+    setDescription(data);
   };
 
   return (
@@ -87,45 +94,64 @@ const AddArticle = () => {
             <label htmlFor="description" className="label">
               Article Description
             </label>
-            <div className="border-2 rounded-lg">
-              <textarea
+            <div className="rounded-lg">
+              <RichTextEditor onChange={handleDescription} />
+
+              {/* <textarea
                 type="text"
                 id="description"
                 required
                 onChange={(e) => setDescription(e.target.value)}
                 className="textarea w-full "
                 placeholder="Enter description"
-              ></textarea>
+              ></textarea> */}
             </div>
           </div>
-          <div className="flex flex-col">
-            <label htmlFor="sourceLink" className="label">
-              Article Link
-            </label>
-            <div className="border-2 rounded-lg">
-              <input
-                type="text"
-                id="sourceLink"
-                required
-                onChange={(e) => setSourceLink(e.target.value)}
-                className="input w-full border"
-                placeholder="Enter Source Link"
-              />
+          <div className="flex gap-4">
+            <div className="flex-1 flex flex-col">
+              <label htmlFor="sourceLink" className="label">
+                Article Link
+              </label>
+              <div className="border-2 rounded-lg">
+                <input
+                  type="text"
+                  id="sourceLink"
+                  required
+                  onChange={(e) => setSourceLink(e.target.value)}
+                  className="input w-full border"
+                  placeholder="Enter Source Link"
+                />
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="sourceLink" className="label">
-              Author Name
-            </label>
-            <div className="border-2 rounded-lg">
-              <input
-                type="text"
-                id="authorName"
-                required
-                onChange={(e) => setAuthorName(e.target.value)}
-                className="input w-full border"
-                placeholder="Enter Author Name"
-              />
+            <div className="flex-1 flex flex-col">
+              <label htmlFor="sourceLink" className="label">
+                Author Name
+              </label>
+              <div className="border-2 rounded-lg">
+                <input
+                  type="text"
+                  id="authorName"
+                  required
+                  onChange={(e) => setAuthorName(e.target.value)}
+                  className="input w-full border"
+                  placeholder="Enter Author Name"
+                />
+              </div>
+            </div>
+            <div className="flex-1 flex flex-col">
+              <label htmlFor="summary" className="label">
+                Enter Summary
+              </label>
+              <div className="border-2 rounded-lg">
+                <input
+                  type="text"
+                  id="summary"
+                  required
+                  onChange={(e) => setSummary(e.target.value)}
+                  className="input w-full border"
+                  placeholder="Enter Summary"
+                />
+              </div>
             </div>
           </div>
           <div className="flex flex-col">
