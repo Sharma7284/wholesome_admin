@@ -75,15 +75,15 @@ const EditArticle = () => {
     formData.append("summary", summary);
     formData.append("id", articleId);
 
-    // apiService
-    //   .post("/articles/updateArticles", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     setIsLoading(false);
-    //   });
+    apiService
+      .post("/articles/updateArticles", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        setIsLoading(false);
+      });
   };
 
   const handleDescription = (data) => {
