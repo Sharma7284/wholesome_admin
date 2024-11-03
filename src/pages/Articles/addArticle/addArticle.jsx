@@ -10,7 +10,7 @@ const AddArticle = () => {
   const [articleCategoryId, setArticleCategoryId] = useState("");
   const [authorName, setAuthorName] = useState("");
   const [summary, setSummary] = useState("");
-  const [isApproved, setIsApproved] = useState(true);
+  const [isApproved, setIsApproved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const [option, setOption] = useState([]);
@@ -47,7 +47,7 @@ const AddArticle = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        
         setIsLoading(false);
       });
   };
@@ -116,7 +116,6 @@ const AddArticle = () => {
                 <input
                   type="text"
                   id="sourceLink"
-                  required
                   onChange={(e) => setSourceLink(e.target.value)}
                   className="input w-full border"
                   placeholder="Enter Source Link"
@@ -124,7 +123,7 @@ const AddArticle = () => {
               </div>
             </div>
             <div className="flex-1 flex flex-col">
-              <label htmlFor="sourceLink" className="label">
+              <label htmlFor="authorName" className="label">
                 Author Name
               </label>
               <div className="border-2 rounded-lg">

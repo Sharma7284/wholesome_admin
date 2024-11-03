@@ -11,7 +11,7 @@ const Sidebar = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log();
+    
 
     let currentIndex = SidebarData.findIndex(
       (f) =>

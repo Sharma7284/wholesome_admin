@@ -41,7 +41,7 @@ const AddPost = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        
         setIsLoading(false);
       });
   };
@@ -103,7 +103,6 @@ const AddPost = () => {
               <input
                 type="text"
                 id="sourceLink"
-                required
                 onChange={(e) => setPostUrl(e.target.value)}
                 className="input w-full border"
                 placeholder="Enter Source Link"

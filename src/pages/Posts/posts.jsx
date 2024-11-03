@@ -19,7 +19,7 @@ const Posts = ({ onDataClick }) => {
       .post("/posts/getPosts", { pageNumber: pageNumber < 1 ? 1 : pageNumber })
       .then((res) => {
         if (res) {
-          console.log(res.data);
+          
           setCount(res.data.length);
           setTotalData(res.data.count);
           setTotalPage(res.data.totalPage);
@@ -59,7 +59,7 @@ const Posts = ({ onDataClick }) => {
         isApproved: !item.isApproved,
       })
       .then((res) => {
-        console.log(res.data);
+        
         if (res.data && res.data.success) {
           toast.update(loading, {
             render: res.data.message,

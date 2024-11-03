@@ -25,32 +25,32 @@ const Main = () => {
 
   // Delete
   const onClickDelete = () => {
-    console.log("Delete");
-    console.log(dataForm);
+    
+    
     if (dataForm.type === "post") {
       apiService
         .post("/posts/postDeletePost", { id: dataForm.id })
         .then((res) => {
-          console.log(res);
+          
         })
         .catch((error) => {
-          console.log(error);
+          
         });
     } else if (dataForm.type === "article") {
       apiService
         .post("/articles/postArticleDelete", { id: dataForm.id })
         .then((res) => {
-          console.log(res);
+          
         })
         .catch((error) => {
-          console.log(error);
+          
         });
     }
   };
 
   // Edit
   // const onClickEdit = () => {
-  //   console.log("Edit");
+  //   
 
   //   if (dataForm.type === "post") {
   //   } else if (dataForm.type === "article") {

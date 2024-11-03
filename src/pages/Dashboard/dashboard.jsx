@@ -18,7 +18,7 @@ const Dashboard = () => {
         setDashboardData(res.data[0]);
       })
       .catch((error) => {
-        console.log(error);
+        
       });
 
     apiService
@@ -27,7 +27,7 @@ const Dashboard = () => {
         setUserData(res.data.data.slice(0, 5));
       })
       .catch((error) => {
-        console.log(error);
+        
       });
 
     apiService
@@ -36,17 +36,17 @@ const Dashboard = () => {
         setArticleData(res.data.data.slice(0, 5));
       })
       .catch((error) => {
-        console.log(error);
+        
       });
 
     apiService
       .post(`/posts/getPosts`, { pageNumber: 1 })
       .then((res) => {
-        console.log(res.data.data.slice(0, 5));
+        
         setPostData(res.data.data.slice(0, 5));
       })
       .catch((error) => {
-        console.log(error);
+        
       });
   }, []);
 

@@ -15,7 +15,7 @@ const AddUser = () => {
     apiService
       .post("/auth/createUser", { name, email, password })
       .then((res) => {
-        console.log(res);
+        
         setIsLoading(false);
       });
   };

@@ -44,4 +44,5 @@ code {
 .ck-editor__editable {
   height: 170px;
   max-height: 170px;
+  padding-left: 25px !important;
 }

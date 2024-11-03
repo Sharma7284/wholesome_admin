@@ -11,12 +11,12 @@ const Community = ({ isEdit, onDataClick }) => {
   const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
-    console.log(isEdit);
+    
     apiService
       .post("/community/getCommunitiesCategory", { pageNumber })
       .then((res) => {
         if (res) {
-          console.log(res.data.data);
+          
           setCount(res.data.length);
           setTotalData(res.data.count);
           setTotalPage(res.data.totalPage);
@@ -27,20 +27,20 @@ const Community = ({ isEdit, onDataClick }) => {
 
   const sendFormData = () => {
     const data = community.filter((f) => f.isSelect);
-    console.log({ data });
+    
     onDataClick(data);
   };
 
   const handleCurrentBox = (id) => {
     const updatedData = community.map((item) => {
       if (item.id === id) {
-        console.log(true, id);
+        
         sendFormData({ id, type: `article` });
         return { ...item, isSelect: !item.isSelected };
       }
       return item;
     });
-    console.log(updatedData);
+    
 
     setCommunity(updatedData);
     setSelectAll(community.every((e) => e.isSelect));

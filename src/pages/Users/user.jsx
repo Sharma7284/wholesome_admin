@@ -16,7 +16,7 @@ const User = () => {
   useEffect(() => {
     apiService.post("/users/getAllUsers", { pageNumber }).then((res) => {
       if (res) {
-        console.log(res.data);
+        
         setCount(res?.data?.length);
         setTotalData(res?.data?.count);
         setTotalPage(res?.data?.totalPage);

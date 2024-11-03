@@ -4,6 +4,7 @@ import { Link, Route, Routes, useLocation, useParams } from "react-router-dom";
 import AddArticle from "./addArticle/addArticle";
 import axios from "axios";
 import { toast } from "react-toastify";
+import EditArticle from "./EditArticle/editArticle";
 
 const Article = ({ onDataClick, isEdit }) => {
   const params = useParams();
@@ -11,7 +12,7 @@ const Article = ({ onDataClick, isEdit }) => {
 
   useEffect(() => {
     if (params["*"]) {
-      console.log(params["*"]);
+      
     }
   }, [params]);
 
@@ -24,34 +25,36 @@ const Article = ({ onDataClick, isEdit }) => {
   const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
-    console.log(isEdit);
+    
     apiService.post("/articles/getArticles", { pageNumber }).then((res) => {
       if (res) {
-        console.log(res.data.data);
+        
         setCount(res.data.length);
         setTotalData(res.data.count);
         setTotalPage(res.data.totalPage);
         setArticle(res.data.data.map((m) => ({ ...m, isSelect: false })));
       }
+
+      
     });
   }, [pageNumber, location]);
 
   const sendFormData = () => {
     const data = article.filter((f) => f.isSelect);
-    console.log({ data });
+    
     onDataClick(data);
   };
 
   const handleCurrentBox = (id) => {
     const updatedData = article.map((item) => {
       if (item.articleId === id) {
-        console.log(true, id);
+        
         sendFormData({ id, type: `article` });
         return { ...item, isSelect: !item.isSelected };
       }
       return item;
     });
-    console.log(updatedData);
+    
 
     setArticle(updatedData);
     setSelectAll(article.every((e) => e.isSelect));
@@ -71,7 +74,7 @@ const Article = ({ onDataClick, isEdit }) => {
         isApproved: !item.isApproved,
       })
       .then((res) => {
-        console.log(res.data);
+        
         if (res.data && res.data.success) {
           toast.update(loading, {
             render: res.data.message,
@@ -187,7 +190,7 @@ const Article = ({ onDataClick, isEdit }) => {
                               <div className="flex gap-4">
                                 <Link
                                   className="link link-info"
-                                  to={`/dashboard/article/${item.articleId}`}
+                                  to={`/dashboard/article/edit?id=${item.articleId}`}
                                 >
                                   Edit
                                 </Link>
@@ -234,6 +237,7 @@ const Article = ({ onDataClick, isEdit }) => {
             }
           ></Route>
           <Route path="add" element={<AddArticle></AddArticle>}></Route>
+          <Route path="edit" element={<EditArticle></EditArticle>}></Route>
         </Routes>
       )}
     </>

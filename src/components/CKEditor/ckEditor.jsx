@@ -46,12 +46,13 @@ import {
 
 import "ckeditor5/ckeditor5.css";
 
-export default function App({ onChange }) {
+export default function App({ onChange, value }) {
   const editorContainerRef = useRef(null);
   const editorRef = useRef(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
 
   useEffect(() => {
+    console.log(value)
     setIsLayoutReady(true);
     return () => setIsLayoutReady(false);
   }, []);
@@ -196,6 +197,7 @@ export default function App({ onChange }) {
         },
       },
     },
+    initialData : value,
     list: {
       properties: {
         styles: true,
