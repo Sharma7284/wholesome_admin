@@ -74,7 +74,7 @@ const EditArticle = () => {
     formData.append("id", articleId);
 
     apiService
-      .put("/articles/updateArticles", formData, {
+      .post("/articles/updateArticles", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
