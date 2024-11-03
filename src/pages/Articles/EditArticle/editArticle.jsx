@@ -13,6 +13,7 @@ const EditArticle = () => {
   const [summary, setSummary] = useState(null);
   const [isApproved, setIsApproved] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [articleId, setArticleId] = useState(null);
   const [isReady, setIsReady] = useState(false);
   const location = useLocation();
 
@@ -21,9 +22,11 @@ const EditArticle = () => {
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     const id = query.get(`id`);
+    setArticleId(id);
 
     apiService.post(`/articles/getArticlesById`, { id }).then((res) => {
       const {
+        articleId,
         title,
         sourceLink,
         authorName,
@@ -32,6 +35,7 @@ const EditArticle = () => {
         articleImage,
         description,
       } = res?.data?.data;
+
       setTitle(title);
       setSourceLink(sourceLink);
       setAuthorName(authorName);
@@ -57,7 +61,9 @@ const EditArticle = () => {
 
     const formData = new FormData();
 
-    formData.append("file", articleImage, articleImage?.name);
+    if (!articleImage) {
+      formData.append("file", articleImage, articleImage?.name);
+    }
     formData.append("title", title);
     formData.append("description", description);
     formData.append("sourceLink", sourceLink);
@@ -65,9 +71,10 @@ const EditArticle = () => {
     formData.append("isApproved", isApproved);
     formData.append("authorName", authorName);
     formData.append("summary", summary);
+    formData.append("id", articleId);
 
     apiService
-      .post("/articles/postArticles", formData, {
+      .put("/articles/updateArticles", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -141,7 +148,6 @@ const EditArticle = () => {
                     type="text"
                     id="sourceLink"
                     value={sourceLink}
-                    required
                     onChange={(e) => setSourceLink(e.target.value)}
                     className="input w-full border"
                     placeholder="Enter Source Link"
