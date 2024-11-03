@@ -61,8 +61,10 @@ const EditArticle = () => {
 
     const formData = new FormData();
 
-    if (!articleImage) {
+    if (typeof articleImage === "object") {
       formData.append("file", articleImage, articleImage?.name);
+    } else {
+      formData.append("articleImage", articleImage);
     }
     formData.append("title", title);
     formData.append("description", description);
@@ -73,15 +75,15 @@ const EditArticle = () => {
     formData.append("summary", summary);
     formData.append("id", articleId);
 
-    apiService
-      .post("/articles/updateArticles", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        setIsLoading(false);
-      });
+    // apiService
+    //   .post("/articles/updateArticles", formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   })
+    //   .then((res) => {
+    //     setIsLoading(false);
+    //   });
   };
 
   const handleDescription = (data) => {
