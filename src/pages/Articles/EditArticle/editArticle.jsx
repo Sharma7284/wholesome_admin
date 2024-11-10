@@ -118,7 +118,7 @@ const EditArticle = () => {
               </label>
               <div className="border-2 flex rounded-lg gap-2 p-2">
                 {articleImage && (
-                  <img src={articleImage} height={60} width={60}></img>
+                  <img src={articleImage} height={60} width={60} alt=""></img>
                 )}
                 <input
                   type="file"

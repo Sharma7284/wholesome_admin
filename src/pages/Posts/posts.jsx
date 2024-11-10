@@ -19,7 +19,6 @@ const Posts = ({ onDataClick }) => {
       .post("/posts/getPosts", { pageNumber: pageNumber < 1 ? 1 : pageNumber })
       .then((res) => {
         if (res) {
-          
           setCount(res.data.length);
           setTotalData(res.data.count);
           setTotalPage(res.data.totalPage);
@@ -59,7 +58,6 @@ const Posts = ({ onDataClick }) => {
         isApproved: !item.isApproved,
       })
       .then((res) => {
-        
         if (res.data && res.data.success) {
           toast.update(loading, {
             render: res.data.message,
@@ -78,12 +76,12 @@ const Posts = ({ onDataClick }) => {
         }
       })
       .catch((error) => {
-        // toast.update(loading, {
-        //   render: error.error.message,
-        //   type: `success`,
-        //   isLoading: false,
-        //   autoClose: 3000,
-        // });
+        toast.update(loading, {
+          render: error.error.message,
+          type: `success`,
+          isLoading: false,
+          autoClose: 3000,
+        });
       });
   };
 
@@ -110,6 +108,7 @@ const Posts = ({ onDataClick }) => {
                     <th>Name</th>
                     <th>Status</th>
                     <th>Source Link</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -134,7 +133,9 @@ const Posts = ({ onDataClick }) => {
                       </td>
                       <td>
                         <p className="badge badge-outline badge-info">
-                          {item?.postCategoryId?.name}
+                          {item?.postCategoryId?.name
+                            .replace(/Wellness/g, "")
+                            .replace(/Health/g, "")}
                         </p>
                       </td>
                       <td>
@@ -163,6 +164,16 @@ const Posts = ({ onDataClick }) => {
                         >
                           Source Link
                         </Link>
+                      </td>
+                      <td>
+                        <div className="flex gap-4">
+                          <Link
+                            className="link link-info"
+                            to={`/dashboard/posts/edit?id=${item.postId}`}
+                          >
+                            Edit
+                          </Link>
+                        </div>
                       </td>
                     </tr>
                   ))}
