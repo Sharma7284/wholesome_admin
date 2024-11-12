@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiService = axios.create({
-  baseURL: `https://wholesomebywh.com:3000/api/v1/`,
+  baseURL: `https://wholesomebywh.com:3000/api/api/v1/`,
 });
 
 apiService.interceptors.request.use(
