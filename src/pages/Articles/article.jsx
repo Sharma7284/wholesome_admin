@@ -12,10 +12,8 @@ const Article = ({ onDataClick, isEdit }) => {
 
   useEffect(() => {
     if (params["*"]) {
-      
     }
   }, [params]);
-
 
   const [article, setArticle] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
@@ -25,36 +23,32 @@ const Article = ({ onDataClick, isEdit }) => {
   const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
-    
-    apiService.post("/articles/getArticles", { pageNumber }).then((res) => {
-      if (res) {
-        
-        setCount(res.data.length);
-        setTotalData(res.data.count);
-        setTotalPage(res.data.totalPage);
-        setArticle(res.data.data.map((m) => ({ ...m, isSelect: false })));
-      }
-
-      
-    });
+    apiService
+      .post("/articles/getArticles", { pageNumber, size: 10 })
+      .then((res) => {
+        if (res) {
+          setCount(res.data.length);
+          setTotalData(res.data.count);
+          setTotalPage(res.data.totalPage);
+          setArticle(res.data.data.map((m) => ({ ...m, isSelect: false })));
+        }
+      });
   }, [pageNumber, location]);
 
   const sendFormData = () => {
     const data = article.filter((f) => f.isSelect);
-    
+
     onDataClick(data);
   };
 
   const handleCurrentBox = (id) => {
     const updatedData = article.map((item) => {
       if (item.articleId === id) {
-        
         sendFormData({ id, type: `article` });
         return { ...item, isSelect: !item.isSelected };
       }
       return item;
     });
-    
 
     setArticle(updatedData);
     setSelectAll(article.every((e) => e.isSelect));
@@ -74,7 +68,6 @@ const Article = ({ onDataClick, isEdit }) => {
         isApproved: !item.isApproved,
       })
       .then((res) => {
-        
         if (res.data && res.data.success) {
           toast.update(loading, {
             render: res.data.message,
