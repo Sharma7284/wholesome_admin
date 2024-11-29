@@ -5,7 +5,7 @@ import AddPost from "./addPost/addPost";
 import { toast, ToastContainer } from "react-toastify";
 import EditPost from "./EditPost/editPost";
 
-const Posts = ({ onDataClick }) => {
+const Posts = ({ onDataClick, searchData }) => {
   const location = useLocation();
   const [post, setPost] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
@@ -15,17 +15,24 @@ const Posts = ({ onDataClick }) => {
   const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
-    apiService
-      .post("/posts/getPosts", { pageNumber: pageNumber < 1 ? 1 : pageNumber })
-      .then((res) => {
-        if (res) {
-          setCount(res.data.length);
-          setTotalData(res.data.count);
-          setTotalPage(res.data.totalPage);
-          setPost(res.data.data.map((m) => ({ ...m, isSelect: false })));
-        }
-      });
-  }, [pageNumber, location]);
+    if (searchData.length === 0) {
+      apiService
+        .post("/posts/getPosts", {
+          pageNumber: pageNumber < 1 ? 1 : pageNumber,
+        })
+        .then((res) => {
+          if (res) {
+            setCount(res.data.length);
+            setTotalData(res.data.count);
+            setTotalPage(res.data.totalPage);
+            setPost(res.data.data.map((m) => ({ ...m, isSelect: false })));
+          }
+        });
+    } else {
+      console.log(searchData)
+      setPost(searchData);
+    }
+  }, [pageNumber, location, searchData]);
 
   const handleCurrentBox = (id) => {
     const updatedData = post.map((item) => {
@@ -92,7 +99,7 @@ const Posts = ({ onDataClick }) => {
         element={
           <div className="flex flex-col overflow-auto max-h-screen h-full">
             {
-              <table className="flex-1 border-y-2 table table-bordered h-[50%]">
+              <table className=" border-y-2 table table-bordered ">
                 <thead>
                   <tr className="text-lg">
                     <th>
@@ -134,8 +141,8 @@ const Posts = ({ onDataClick }) => {
                       <td>
                         <p className="badge badge-outline badge-info">
                           {item?.postCategoryId?.name
-                            .replace(/Wellness/g, "")
-                            .replace(/Health/g, "")}
+                            ?.replace(/Wellness/g, "")
+                            ?.replace(/Health/g, "")}
                         </p>
                       </td>
                       <td>

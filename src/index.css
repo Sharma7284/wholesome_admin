@@ -24,6 +24,10 @@ code {
   }
 }
 
+*::-webkit-scrollbar {
+  width: 4px;
+}
+
 /* .main-container {
   font-family: "Lato";
   width: fit-content;
